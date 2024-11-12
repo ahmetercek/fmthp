@@ -36,15 +36,21 @@ enum NetworkError: Error, LocalizedError, Equatable {
     }
 }
 
+protocol NetworkSession {
+    func data(for request: URLRequest) async throws -> (Data, URLResponse)
+}
+
+extension URLSession: NetworkSession { }
+
 // NetworkManager class for handling network requests
 class NetworkManager {
 
     // Singleton instance (optional, based on your needs)
     static let shared = NetworkManager()
-    private let session: URLSession
+    private let session: NetworkSession
 
     // Allow dependency injection for URLSession (defaulting to .shared for normal use)
-    init(session: URLSession = .shared) {
+    init(session: NetworkSession = URLSession.shared) {
         self.session = session
     }
 
