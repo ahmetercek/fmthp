@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="RecipeFetchProject" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="vJZ-z3-UJY" id="pab-C2-FTW"/>
                 <outlet property="view" destination="iN0-l3-epB" id="17E-H4-vTz"/>
             </connections>
         </placeholder>
@@ -17,8 +18,20 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vJZ-z3-UJY">
+                    <rect key="frame" x="10" y="69" width="373" height="739"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vJZ-z3-UJY" secondAttribute="trailing" constant="10" id="d0h-vt-hD7"/>
+                <constraint firstItem="vJZ-z3-UJY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="jcg-J6-GV3"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vJZ-z3-UJY" secondAttribute="bottom" constant="10" id="jrq-EY-bZY"/>
+                <constraint firstItem="vJZ-z3-UJY" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="wYP-bL-hG2"/>
+            </constraints>
             <point key="canvasLocation" x="132" y="-12"/>
         </view>
     </objects>
