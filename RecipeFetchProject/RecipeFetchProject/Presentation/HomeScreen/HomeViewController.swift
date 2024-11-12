@@ -17,9 +17,24 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .green
         title = "Home"
         
+        configureViewModel()
+        fetchRecipes()
     }
     
     private func configureViewModel() {
-        viewModel = HomeViewModel()
+        viewModel = HomeViewModel(recipeService: RecipeService())
     }
+    
+    private func fetchRecipes() {
+        Task {
+            do {
+                try await viewModel.fetchRecipes() // Call the async function
+                let recipes = viewModel.recipes
+                print(recipes)
+            } catch {
+                // Handle error
+            }
+        }
+    }
+    
 }
