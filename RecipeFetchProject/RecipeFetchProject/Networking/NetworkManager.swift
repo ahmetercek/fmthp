@@ -27,7 +27,7 @@ enum NetworkError: Error, LocalizedError, Equatable {
         case .invalidURL:
             return "The URL is invalid."
         case .decodingError:
-            return "Failed to decode the response."
+            return ErrorMessages.dataMalformed
         case .serverError(let statusCode):
             return "Server returned an error with status code \(statusCode)."
         case .custom(let message):

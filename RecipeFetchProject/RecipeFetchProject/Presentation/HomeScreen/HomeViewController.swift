@@ -11,10 +11,13 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Properties
     private var viewModel: HomeViewModel!
+    private var refreshControl = UIRefreshControl()
     
     // MARK: - UI
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noDataLabel: UILabel!
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -31,8 +34,16 @@ class HomeViewController: BaseViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        // Register a table view cell with a reuse identifier
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "RecipeTableViewCell")
+        // Register a custom table view cell with a reuse identifier
+        tableView.register(RecipeTableViewCell.self, forCellReuseIdentifier: "RecipeTableViewCell")
+        
+        // Configure automatic dimension for row heights and provide an estimated row height for better performance
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 96
+        
+        // Add a pull-to-refresh control to the table view
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     private func configureViewModel() {
@@ -49,6 +60,7 @@ class HomeViewController: BaseViewController {
     
     /// Fetches and handles the display of recipes asynchronously.
     /// This method interacts with the view model to fetch recipes and updates the UI accordingly.
+    /// If an error occurs during fetching, it displays an error popup with the appropriate message.
     private func fetchAndHandleRecipes() async {
         do {
             // Try to fetch recipes asynchronously using the view model
@@ -57,15 +69,33 @@ class HomeViewController: BaseViewController {
             updateUI()
         } catch {
             // Show an error message popup if fetching fails
+            showErrorPopup(message: error.localizedDescription)
         }
+        // End the refresh control animation regardless of success or failure
+        refreshControl.endRefreshing()
     }
     
     /// Updates the user interface based on the current state of the recipe list.
+    /// If the recipe list is empty, it shows a "No Data" label and hides the table view.
+    /// Otherwise, it hides the "No Data" label and reloads the table view data.
     func updateUI() {
+        // Check if the recipe list is empty
+        let isEmpty = viewModel.isRecipeListEmpty()
+        
+        // Show or hide the "No Data" label based on the data state
+        noDataLabel.isHidden = !isEmpty
+        
         // Reload the table view to reflect the updated data state
         tableView.reloadData()
     }
     
+    // MARK: - Actions
+
+    /// Handles the pull-to-refresh action triggered by the user.
+    @objc private func handleRefresh() {
+        // Re-fetch recipes when user pulls to refresh
+        fetchRecipes()
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -86,11 +116,15 @@ extension HomeViewController: UITableViewDataSource {
     ///   - indexPath: The index path specifying the location of the cell.
     /// - Returns: A configured `UITableViewCell` to display.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Dequeue a reusable cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableViewCell", for: indexPath)
+        // Dequeue a reusable cell of type `CustomTableViewCell`
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeTableViewCell", for: indexPath) as? RecipeTableViewCell else {
+            return UITableViewCell()
+        }
 
-        let recipe = viewModel.getRecipe(at: indexPath.row)
-        cell.textLabel?.text = recipe?.name
+        // Fetch the recipe from the view model and configure the cell if available
+        if let recipe = viewModel.getRecipe(at: indexPath.row) {
+            cell.configure(with: recipe)
+        }
 
         return cell
     }

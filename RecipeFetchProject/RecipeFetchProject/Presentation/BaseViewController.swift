@@ -28,5 +28,19 @@ class BaseViewController: UIViewController {
             navigationController.navigationBar.scrollEdgeAppearance = appearance
         }
     }
+    
+    /// Displays a popup alert with the provided error message.
+    /// - Parameters:
+    ///   - title: The title of the alert (default is "Error").
+    ///   - message: The error message to display.
+    ///   - completion: An optional completion handler that is called when the alert is dismissed.
+    func showErrorPopup(title: String = ErrorMessages.errorTitle, message: String, completion: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: ErrorMessages.errorButtonTitle, style: .default) { _ in
+            completion?()
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
 
 }

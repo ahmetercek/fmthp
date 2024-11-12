@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="RecipeFetchProject" customModuleProvider="target">
             <connections>
+                <outlet property="noDataLabel" destination="Udd-qd-Vij" id="NFA-tX-VdZ"/>
                 <outlet property="tableView" destination="vJZ-z3-UJY" id="pab-C2-FTW"/>
                 <outlet property="view" destination="iN0-l3-epB" id="17E-H4-vTz"/>
             </connections>
@@ -23,6 +24,12 @@
                     <rect key="frame" x="10" y="69" width="373" height="739"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Udd-qd-Vij">
+                    <rect key="frame" x="148.33333333333334" y="410" width="96.666666666666657" height="32.333333333333314"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                    <color key="textColor" systemColor="systemBlueColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -30,6 +37,8 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vJZ-z3-UJY" secondAttribute="trailing" constant="10" id="d0h-vt-hD7"/>
                 <constraint firstItem="vJZ-z3-UJY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="jcg-J6-GV3"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vJZ-z3-UJY" secondAttribute="bottom" constant="10" id="jrq-EY-bZY"/>
+                <constraint firstItem="Udd-qd-Vij" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="l5f-Zx-IKq"/>
+                <constraint firstItem="Udd-qd-Vij" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="l8N-eX-XNh"/>
                 <constraint firstItem="vJZ-z3-UJY" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="wYP-bL-hG2"/>
             </constraints>
             <point key="canvasLocation" x="132" y="-12"/>
@@ -38,6 +47,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
